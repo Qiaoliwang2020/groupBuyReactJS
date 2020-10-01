@@ -1,0 +1,62 @@
+.profile-top-bg{
+    width: 100%;
+    height: 200px;
+    background: url('../../static/img/v2/profilebg.svg') 0 0 no-repeat;
+    background-size: cover;
+    z-index: 0;
+    position: relative;
+}
+.profile-info{
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background: #ffffff;
+    margin-top:-30px;
+    z-index: 1;
+    position: relative;
+    .profile-avatar{
+        position: absolute;
+        left: 63px;
+        top:-60px;
+    }
+    .profile-name{
+        margin-left: 200px;
+    }
+}
+.list-title{
+    font-size: 30px;
+    color:#333;
+}
+.at-tab-bar.tab-list{
+  &::after{
+    border-top-width: 0px;
+  }
+  padding: 20px 0px;
+}
+.top-line-item::before{
+  content: '';
+  position: absolute;
+  -webkit-transform-origin: center;
+  -ms-transform-origin: center;
+  transform-origin: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  pointer-events: none;
+  top: 0;
+  left: 24rpx;
+  right: 0;
+  bottom: auto;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  border-top: 1PX solid #d6e4ef;
+
+}
+
+.at-avatar--large {
+  width: 150px;
+  height: 150px;
+}
+.at-list__item-extra{
+  font-size: 28px;
+  color: #666666;
+}
