@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text } from '@tarojs/components'
-import { AtButton ,AtGrid} from 'taro-ui'
+import { View, Text,Swiper, SwiperItem } from '@tarojs/components'
+import { AtButton ,AtGrid, AtList, AtListItem,AtTag} from 'taro-ui'
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import "taro-ui/dist/style/components/grid.scss";
+import "taro-ui/dist/style/components/list.scss";
+import "taro-ui/dist/style/components/tag.scss";
+
 import './index.less'
 
 export default class Index extends Component {
@@ -27,32 +30,111 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='at-row'>
-        <AtGrid hasBorder={false} data={
-          [
-            {
-              image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
-              value: '商品管理'
-            },
-            {
-              image: 'https://img20.360buyimg.com/jdphoto/s72x72_jfs/t15151/308/1012305375/2300/536ee6ef/5a411466N040a074b.png',
-              value: '添加员工'
-            },
-            {
-              image: 'https://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png',
-              value: '发布团购'
-            },
-            {
-              image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png',
-              value: '设置自提点'
-            },
-            {
-              image: 'https://img14.360buyimg.com/jdphoto/s72x72_jfs/t17251/336/1311038817/3177/72595a07/5ac44618Na1db7b09.png',
-              value: '选择配送区域'
-            }
-          ]
-        } />
-        <navigator url="/pages/addClass/index" open-type="redirect">添加分类</navigator>
+      <View className='index'>
+        <Swiper
+          className='swiper-index bg-white'
+          indicatorColor='#999'
+          indicatorActiveColor='#333'
+          circular
+          autoplay>
+          <SwiperItem>
+            <View className='swiper-index-item'>
+              <View className='swiper-image' style={{
+                backgroundImage: "url(" + "https://restaurantden.com/wp-content/uploads/2017/09/stocksnap.jpg" + ")",
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+              }}></View>
+            </View>
+          </SwiperItem>
+          <SwiperItem>
+            <View className='swiper-index-item'>
+              <View className='swiper-image' style={{
+                backgroundImage: "url(" + "https://www.rachelpaulsfood.com/wp-content/uploads/Slide1-7.jpg" + ")",
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+              }}></View>
+            </View>
+          </SwiperItem>
+          <SwiperItem>
+            <View className='swiper-index-item'>
+              <View className='swiper-image' style={{
+                backgroundImage: "url(" + "https://image.shutterstock.com/mosaic_250/207628113/1470615731/stock-photo-japanese-sushi-food-maki-ands-rolls-with-tuna-salmon-shrimp-crab-and-avocado-top-view-of-1470615731.jpg" + ")",
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+              }}></View>
+            </View>
+          </SwiperItem>
+        </Swiper>
+        <View className='filter-bar bg-white'>
+          <View className='filter-tab'>
+            <View className='filter-address tab-item'>全墨尔本<text className='drop-down-icon'></text></View>
+            <View className='filter-group tab-item'>全部团购<text className='drop-down-icon'></text></View>
+            <View className='filter-sort tab-item'>默认排序<text className='drop-down-icon'></text></View>
+          </View>
+          {/*<View className='filter-content'>*/}
+            {/*<View>*/}
+              {/*<AtList>*/}
+                {/*<AtListItem title='标题文字' onClick={this.handleClick} />*/}
+              {/*</AtList>*/}
+            {/*</View>*/}
+            {/*<View>yyy</View>*/}
+            {/*<View>hhhh</View>*/}
+          {/*</View>*/}
+        </View>
+        {/*<navigator url="/pages/addClass/index" open-type="redirect">添加分类</navigator>*/}
+
+        <View className='item-card'>
+           <View className='item-picture' style={{
+             backgroundImage: "url(" + "https://restaurantden.com/wp-content/uploads/2017/09/stocksnap.jpg" + ")",
+             backgroundPosition: 'center',
+             backgroundSize: 'cover',
+             backgroundRepeat: 'no-repeat'
+           }}>
+             <View className='picture-bottom'>
+               <View className='tags'>
+                 <AtTag type='primary' size='small' active>首单优惠</AtTag>
+                 <AtTag type='primary' size='small' active>积分抵扣</AtTag>
+                 <AtTag type='primary' size='small' active>自提优惠</AtTag>
+                 <AtTag type='primary' size='small' active>新品尝鲜价</AtTag>
+               </View>
+             </View>
+           </View>
+           <View className='card-bottom'>
+             <View>
+                <text className='card-title'>蛋糕+奶茶--10.7 派送/自取</text>
+                <text className='card-address'>Glen Waverley  |  07/10/2020 </text>
+             </View>
+             <AtButton className='card-type' type='primary' size='small' circle>配送/自提</AtButton>
+           </View>
+        </View>
+
+        <View className='item-card'>
+          <View className='item-picture' style={{
+            backgroundImage: "url(" + "https://restaurantden.com/wp-content/uploads/2017/09/stocksnap.jpg" + ")",
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+          }}>
+            <View className='picture-bottom'>
+              <View className='tags'>
+                <AtTag type='primary' size='small' active>首单优惠</AtTag>
+                <AtTag type='primary' size='small' active>积分抵扣</AtTag>
+                <AtTag type='primary' size='small' active>自提优惠</AtTag>
+                <AtTag type='primary' size='small' active>新品尝鲜价</AtTag>
+              </View>
+            </View>
+          </View>
+          <View className='card-bottom'>
+            <View>
+              <text className='card-title'>蛋糕+奶茶--10.7 派送/自取</text>
+              <text className='card-address'>Glen Waverley  |  07/10/2020 </text>
+            </View>
+            <AtButton className='card-type' type='primary' size='small' circle>配送/自提</AtButton>
+          </View>
+        </View>
       </View>
     )
   }

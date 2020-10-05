@@ -1,8 +1,9 @@
 export default {
   pages: [
-
-    'pages/profile/index',
+    'pages/addGroupBuy/index',
     'pages/index/index',
+    'pages/profile/index',
+
     'pages/messages/index',
     'pages/orders/index',
     'pages/addClass/index'

@@ -1,9 +1,11 @@
 .message-tab{
+
   .at-tabs__header{
     background: #FEE57F;
     color: #333333;
     justify-content: center;
-
+    position: fixed;
+    z-index: 100;
     .at-tabs__item{
       flex: none;
       font-size: 30px;
@@ -12,6 +14,9 @@
     .at-tabs__item--active{
       color: #000;
     }
+  }
+  .at-tabs__body{
+    padding-top: 90px;
   }
   .at-tabs__item-underline{
     margin: auto;
@@ -49,10 +54,13 @@
   .at-card__content-note{
     text-align: center;
     font-size: 30px;
-    border-top:1px solid #f2f2f2;
+    border-top:1PX solid #f2f2f2;
     padding: 15px 0px 5px 0px;
   }
 }
 .message-list{
   padding-bottom: 60px;
+}
+.at-list__item::after{
+  border-bottom: 1PX solid #e8e8e8;
 }

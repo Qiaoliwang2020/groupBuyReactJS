@@ -1,6 +1,6 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "groupBuy",
+	"projectname": "groupBuyReactJS",
 	"description": "a group buy app run at wechat",
 	"appid": "wx31681e9636210076",
 	"setting": {
