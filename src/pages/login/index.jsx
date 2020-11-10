@@ -18,15 +18,40 @@ export default class Index extends Component {
     }
   }
 
-  componentWillMount () { }
+  componentWillMount () {
+    wx.getStorage({
+      key:'avatarUrl',
+      success: (res) => {
+        this.setState({
+          avatarUrl:res.data
+        })
+      },
+    })
+    wx.getStorage({
+      key:'nickName',
+      success: (res) => {
+        this.setState({
+          nickName:res.data
+        })
+        this.toIndex()
+      }
+    })
 
-  componentDidMount () { }
 
-  componentWillUnmount () { }
+  }
 
-  componentDidShow () { }
+  componentDidMount () {}
 
-  componentDidHide () { }
+  componentWillUnmount () {}
+
+  componentDidShow () {}
+  componentDidHide () {}
+
+  toIndex(){
+    Taro.switchTab({
+      url:`/pages/profile/index`,
+    })
+  }
 
   login(){
     Taro.login()
@@ -42,11 +67,22 @@ export default class Index extends Component {
               })
               setGlobalData('avatarUrl',res.userInfo.avatarUrl);
               setGlobalData('nickName',res.userInfo.nickName);
-
+              wx.setStorage({
+                key:'avatarUrl',
+                data:res.userInfo.avatarUrl,
+                success: (res) => {
+                  console.log(`avatarUrl ${res.errMsg}`)
+                }
+              })
+              wx.setStorage({
+                key:'nickName',
+                data:res.userInfo.nickName,
+                success: (res) => {
+                  console.log(`nickName ${res.errMsg}`)
+                }
+              })
               setTimeout(()=>{
-                Taro.switchTab({
-                  url:`/pages/profile/index`,
-                })
+                this.toIndex()
               },500)
             }
           })
