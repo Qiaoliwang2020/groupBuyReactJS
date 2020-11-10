@@ -1,0 +1,95 @@
+page{
+  .my-group{
+    width: 100%;
+    .at-tabs__header{
+      background: #FEE57F;
+      color: #333333;
+      justify-content: center;
+      position: fixed;
+      z-index: 100;
+      .at-tabs__item{
+        flex: none;
+        font-size: 30px;
+        width: 20%;
+      }
+      .at-tabs__item--active{
+        color: #000;
+      }
+    }
+    .at-tabs__body{
+      padding-top: 90px;
+    }
+    .at-tabs__item-underline{
+      margin: auto;
+      right: 0;
+      width: 30%;
+      height: 6px;
+      background-color:#000;
+      border-radius: 6px;
+    }
+    .group-list{
+      padding: 24px;
+    }
+    .group-card{
+      margin-bottom: 24px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      .card-content{
+        display: flex;
+        justify-content: space-between;
+      }
+      .group-picture{
+         width: 240px;
+         height: 240px;
+      }
+      .group-info{
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .title{
+          font-size: 30px;
+          font-weight: bold;
+        }
+        .des{
+          font-size: 26px;
+          color: #666666;
+        }
+        .tool{
+          font-size: 22px;
+          color: #999999;
+        }
+      }
+      .card-bottom{
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .status{
+          font-size: 28px;
+          .status-on{
+            color: #FF3A29;
+          }
+          .status-off{
+            color: #2EB820;
+          }
+          .status-none{
+            color: #999999;
+          }
+        }
+
+        .card-btn{
+          display: flex;
+          justify-content: flex-end;
+        }
+        .at-button{
+          margin: 0px 0px 0px 20px;
+          border: 1PX solid #e8e8e8;
+          color: #666;
+        }
+      }
+    }
+
+  }
+}

@@ -1,5 +1,6 @@
 export default {
   pages: [
+    'pages/myGroup/index',
     'pages/login/index',
     'pages/profile/index',
     'pages/index/index',

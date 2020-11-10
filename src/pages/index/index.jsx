@@ -103,7 +103,7 @@ export default class Index extends Component {
             }}>
               <View className='picture-bottom'>
                 <View className='tags'>
-                  <AtTag type='primary' size='small' active>首单优惠</AtTag>
+                  <AtTag type='primary' size='small' active>15公里以内均可配送</AtTag>
                   <AtTag type='primary' size='small' active>积分抵扣</AtTag>
                   <AtTag type='primary' size='small' active>自提优惠</AtTag>
                   <AtTag type='primary' size='small' active>新品尝鲜价</AtTag>
@@ -128,6 +128,31 @@ export default class Index extends Component {
             }}>
               <View className='picture-bottom'>
                 <View className='tags'>
+                  <AtTag type='primary' size='small' active>仅City地区</AtTag>
+                  <AtTag type='primary' size='small' active>积分抵扣</AtTag>
+                  <AtTag type='primary' size='small' active>自提优惠</AtTag>
+                  <AtTag type='primary' size='small' active>新品尝鲜价</AtTag>
+                </View>
+              </View>
+            </View>
+            <View className='card-bottom'>
+              <View>
+                <text className='card-title'>蛋糕+奶茶--10.7 派送</text>
+                <text className='card-address'>Melbourne City  |  07/10/2020 </text>
+              </View>
+              <AtButton className='card-type' type='primary' size='small' circle>10单起配送</AtButton>
+            </View>
+          </View>
+
+          <View className='item-card'>
+            <View className='item-picture' style={{
+              backgroundImage: "url(" + "https://restaurantden.com/wp-content/uploads/2017/09/stocksnap.jpg" + ")",
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat'
+            }}>
+              <View className='picture-bottom'>
+                <View className='tags'>
                   <AtTag type='primary' size='small' active>首单优惠</AtTag>
                   <AtTag type='primary' size='small' active>积分抵扣</AtTag>
                   <AtTag type='primary' size='small' active>自提优惠</AtTag>
@@ -137,10 +162,10 @@ export default class Index extends Component {
             </View>
             <View className='card-bottom'>
               <View>
-                <text className='card-title'>蛋糕+奶茶--10.7 派送/自取</text>
-                <text className='card-address'>Glen Waverley  |  07/10/2020 </text>
+                <text className='card-title'>蛋糕+奶茶--10.7 派送</text>
+                <text className='card-address'>Melbourne City  |  07/10/2020 </text>
               </View>
-              <AtButton className='card-type' type='primary' size='small' circle>8/10人</AtButton>
+              <AtButton className='card-type' type='primary' size='small' circle disabled>已结束</AtButton>
             </View>
           </View>
         </View>
