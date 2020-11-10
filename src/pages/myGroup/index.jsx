@@ -20,11 +20,20 @@ export default class Index extends Component {
   componentWillMount () {
 
   }
+  componentDidMount () {
+    if(Taro.getCurrentInstance().router.params.current){
+      let current = parseInt(Taro.getCurrentInstance().router.params.current);
+      this.setState({
+        current: current
+      })
+    }else {
+      this.setState({
+        current: 0
+      })
+    }
+  }
 
-  componentDidMount () {}
-
-  componentWillUnmount () {}
-
+  componentWillUnmount(){}
   componentDidShow () {}
   componentDidHide () {}
 
@@ -52,9 +61,9 @@ export default class Index extends Component {
                     backgroundRepeat: 'no-repeat'
                   }}></View>
                   <View className='group-info'>
-                    <View className='title'>1号亚超 11.7 首团</View>
+                    <View className='title line-1-ellipsis'>1号亚超 11.7 首团1号亚超 11.7 首团1号亚超 11.7 首团1号亚超 11.7 首团1号亚超 11.7 首团</View>
                     <View className='des'>东南区团购黄金组合【Le crois】面包 & 【YUNIQUE 御黑堂】奶茶奶茶奶茶奶茶奶茶奶茶奶茶</View>
-                    <View className='tool'>07/11/2020 创建 | 新增 | 0 单</View>
+                    <View className='tool'>07/11/2020 创建 | 0 单</View>
                   </View>
                 </View>
                 <View className='card-bottom'>
@@ -81,9 +90,9 @@ export default class Index extends Component {
                     backgroundRepeat: 'no-repeat'
                   }}></View>
                   <View className='group-info'>
-                    <View className='title'>1号亚超 11.7 首团</View>
+                    <View className='title line-1-ellipsis'>1号亚超 11.7 首团</View>
                     <View className='des'>东南区团购黄金组合【Le crois】面包 & 【YUNIQUE 御黑堂】奶茶奶茶奶茶奶茶奶茶奶茶奶茶</View>
-                    <View className='tool'>07/11/2020 创建 | 新增 | 0 单</View>
+                    <View className='tool'>07/11/2020 创建 | 0 单</View>
                   </View>
                 </View>
                 <View className='card-bottom'>
@@ -110,9 +119,9 @@ export default class Index extends Component {
                     backgroundRepeat: 'no-repeat'
                   }}></View>
                   <View className='group-info'>
-                    <View className='title'>1号亚超 11.7 首团</View>
+                    <View className='title line-1-ellipsis'>1号亚超 11.7 首团</View>
                     <View className='des'>东南区团购黄金组合【Le crois】面包 & 【YUNIQUE 御黑堂】奶茶奶茶奶茶奶茶奶茶奶茶奶茶</View>
-                    <View className='tool'>07/11/2020 创建 | 新增 | 0 单</View>
+                    <View className='tool'>07/11/2020 创建 | 0 单</View>
                   </View>
                 </View>
                 <View className='card-bottom'>
@@ -144,9 +153,9 @@ export default class Index extends Component {
                     backgroundRepeat: 'no-repeat'
                   }}></View>
                   <View className='group-info'>
-                    <View className='title'>1号亚超 11.7 首团</View>
+                    <View className='title line-1-ellipsis'>1号亚超 11.7 首团</View>
                     <View className='des'>东南区团购黄金组合【Le crois】面包 & 【YUNIQUE 御黑堂】奶茶奶茶奶茶奶茶奶茶奶茶奶茶</View>
-                    <View className='tool'>07/11/2020 创建 | 新增 | 0 单</View>
+                    <View className='tool'>07/11/2020 创建 | 0 单</View>
                   </View>
                 </View>
                 <View className='card-bottom'>
@@ -178,9 +187,9 @@ export default class Index extends Component {
                     backgroundRepeat: 'no-repeat'
                   }}></View>
                   <View className='group-info'>
-                    <View className='title'>1号亚超 11.7 首团</View>
+                    <View className='title line-1-ellipsis'>1号亚超 11.7 首团</View>
                     <View className='des'>东南区团购黄金组合【Le crois】面包 & 【YUNIQUE 御黑堂】奶茶奶茶奶茶奶茶奶茶奶茶奶茶</View>
-                    <View className='tool'>07/11/2020 创建 | 新增 | 0 单</View>
+                    <View className='tool'>07/11/2020 创建 | 0 单</View>
                   </View>
                 </View>
                 <View className='card-bottom'>
@@ -212,9 +221,9 @@ export default class Index extends Component {
                     backgroundRepeat: 'no-repeat'
                   }}></View>
                   <View className='group-info'>
-                    <View className='title'>1号亚超 11.7 首团</View>
+                    <View className='title line-1-ellipsis'>1号亚超 11.7 首团</View>
                     <View className='des'>东南区团购黄金组合【Le crois】面包 & 【YUNIQUE 御黑堂】奶茶奶茶奶茶奶茶奶茶奶茶奶茶</View>
-                    <View className='tool'>07/11/2020 创建 | 新增 | 0 单</View>
+                    <View className='tool'>07/11/2020 创建 | 0 单</View>
                   </View>
                 </View>
                 <View className='card-bottom'>
