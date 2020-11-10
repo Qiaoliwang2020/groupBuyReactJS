@@ -1,3 +1,11 @@
+.profile{
+  padding: 0px 20px;
+}
+.profile-title{
+  font-size: 32px;
+  font-weight: 500;
+  padding: 24px 30px;
+}
 .profile-top-bg{
     width: 100%;
     height: 200px;
@@ -15,7 +23,7 @@
     position: relative;
     .profile-avatar{
         position: absolute;
-        left: 63px;
+        left: 40px;
         top:-60px;
     }
     .profile-name{
@@ -32,58 +40,60 @@
   }
 }
 .at-tab-bar.tab-list{
+  padding-bottom: 20px;
   &::after{
     border-top-width: 0px;
-
   }
-  padding: 20px 0px;
-}
-
-.top-line-item::before{
-  content: '';
-  position: absolute;
-  -webkit-transform-origin: center;
-  -ms-transform-origin: center;
-  transform-origin: center;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  pointer-events: none;
-  top: 0;
-  left: 24rpx;
-  right: 0;
-  bottom: auto;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-  border-top: 1PX solid #e8e8e8;
-
 }
 
 .at-avatar--large {
   width: 150px;
   height: 150px;
 }
-.at-list__item-extra{
-  font-size: 28px;
-  color: #666666;
-}
-.at-list__item::after{
-  border-bottom: 1PX solid #e8e8e8;
-}
-.at-list__item .item-extra__icon-arrow{
-  color: #666666;
-  font-size: 38px;
-}
+
 .new-group-buy{
   padding: 30px;
-}
-.at-button--primary {
-  border: 1PX solid #FFD947;
-  background: #FFD947;
-  color: #000000;
 }
 .profile-actor{
   position: absolute;
   left: 225px;
   top: -20px;
 }
+.profile-feature-list{
+  display: flex;
+  padding: 0px 0px 30px 0px;
+  .profile-feature-item{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    .wrap-icon{
+      width: 100px;
+      height: 100px;
+      margin: 10px auto;
+      background: #f2f2f2;
+      border-radius: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .font-icon{
+        margin: 0 auto;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 100%;
+        background: #FFC500;
+        border:4px solid #000000;
+        color: #000000;
+        text-align: center;
+      }
+    }
+    .text-icon{
+      font-size: 28px;
+      color: #333333;
+    }
+  }
+}
+
+

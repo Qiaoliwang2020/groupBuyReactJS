@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 import React, { Component } from 'react'
 import { View, Text,Swiper, SwiperItem } from '@tarojs/components'
 import { AtButton ,AtGrid, AtList, AtListItem,AtTag} from 'taro-ui'
@@ -26,11 +27,17 @@ export default class Index extends Component {
   onAddToFavorites() {
 
   }
+  handleNavToOtherPages(){
+    Taro.navigateTo({
+      url:`/pages/groupBuyDetail/index`,
+    })
+  }
 
 
   render () {
     return (
       <View className='index'>
+        <View className='fixed-top'>
         <Swiper
           className='swiper-index bg-white'
           indicatorColor='#999'
@@ -85,54 +92,56 @@ export default class Index extends Component {
           {/*</View>*/}
         </View>
         {/*<navigator url="/pages/addClass/index" open-type="redirect">添加分类</navigator>*/}
-
-        <View className='item-card'>
-           <View className='item-picture' style={{
-             backgroundImage: "url(" + "https://restaurantden.com/wp-content/uploads/2017/09/stocksnap.jpg" + ")",
-             backgroundPosition: 'center',
-             backgroundSize: 'cover',
-             backgroundRepeat: 'no-repeat'
-           }}>
-             <View className='picture-bottom'>
-               <View className='tags'>
-                 <AtTag type='primary' size='small' active>首单优惠</AtTag>
-                 <AtTag type='primary' size='small' active>积分抵扣</AtTag>
-                 <AtTag type='primary' size='small' active>自提优惠</AtTag>
-                 <AtTag type='primary' size='small' active>新品尝鲜价</AtTag>
-               </View>
-             </View>
-           </View>
-           <View className='card-bottom'>
-             <View>
-                <text className='card-title'>蛋糕+奶茶--10.7 派送/自取</text>
-                <text className='card-address'>Glen Waverley  |  07/10/2020 </text>
-             </View>
-             <AtButton className='card-type' type='primary' size='small' circle>配送/自提</AtButton>
-           </View>
         </View>
-
-        <View className='item-card'>
-          <View className='item-picture' style={{
-            backgroundImage: "url(" + "https://restaurantden.com/wp-content/uploads/2017/09/stocksnap.jpg" + ")",
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat'
-          }}>
-            <View className='picture-bottom'>
-              <View className='tags'>
-                <AtTag type='primary' size='small' active>首单优惠</AtTag>
-                <AtTag type='primary' size='small' active>积分抵扣</AtTag>
-                <AtTag type='primary' size='small' active>自提优惠</AtTag>
-                <AtTag type='primary' size='small' active>新品尝鲜价</AtTag>
+        <View className='card-list'>
+          <View className='item-card' onClick={this.handleNavToOtherPages.bind(this)}>
+            <View className='item-picture' style={{
+              backgroundImage: "url(" + "https://restaurantden.com/wp-content/uploads/2017/09/stocksnap.jpg" + ")",
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat'
+            }}>
+              <View className='picture-bottom'>
+                <View className='tags'>
+                  <AtTag type='primary' size='small' active>首单优惠</AtTag>
+                  <AtTag type='primary' size='small' active>积分抵扣</AtTag>
+                  <AtTag type='primary' size='small' active>自提优惠</AtTag>
+                  <AtTag type='primary' size='small' active>新品尝鲜价</AtTag>
+                </View>
               </View>
             </View>
-          </View>
-          <View className='card-bottom'>
-            <View>
-              <text className='card-title'>蛋糕+奶茶--10.7 派送/自取</text>
-              <text className='card-address'>Glen Waverley  |  07/10/2020 </text>
+            <View className='card-bottom'>
+              <View>
+                <text className='card-title'>蛋糕+奶茶--10.7 派送/自取</text>
+                <text className='card-address'>Glen Waverley  |  07/10/2020 </text>
+              </View>
+              <AtButton className='card-type' type='primary' size='small' circle>配送/自提</AtButton>
             </View>
-            <AtButton className='card-type' type='primary' size='small' circle>配送/自提</AtButton>
+          </View>
+
+          <View className='item-card'>
+            <View className='item-picture' style={{
+              backgroundImage: "url(" + "https://restaurantden.com/wp-content/uploads/2017/09/stocksnap.jpg" + ")",
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat'
+            }}>
+              <View className='picture-bottom'>
+                <View className='tags'>
+                  <AtTag type='primary' size='small' active>首单优惠</AtTag>
+                  <AtTag type='primary' size='small' active>积分抵扣</AtTag>
+                  <AtTag type='primary' size='small' active>自提优惠</AtTag>
+                  <AtTag type='primary' size='small' active>新品尝鲜价</AtTag>
+                </View>
+              </View>
+            </View>
+            <View className='card-bottom'>
+              <View>
+                <text className='card-title'>蛋糕+奶茶--10.7 派送/自取</text>
+                <text className='card-address'>Glen Waverley  |  07/10/2020 </text>
+              </View>
+              <AtButton className='card-type' type='primary' size='small' circle>8/10人</AtButton>
+            </View>
           </View>
         </View>
       </View>

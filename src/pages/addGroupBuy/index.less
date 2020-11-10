@@ -19,7 +19,7 @@
   }
 }
 .des-text{
-  border:1PX solid #e8e8e8;
+  border:1PX solid #e8e8e8!important;
   padding: 6px;
 
   .at-textarea__textarea{
@@ -48,13 +48,9 @@
 .at-list__item::after{
   border-bottom: 1PX solid #e8e8e8;
 }
-.addGoods-button{
-  display: flex;
-  justify-content: space-between;
-  padding: 30px 0px;
-  .at-button{
-    flex: 1;
-    margin: 0px 20px;
+.setting-has-note{
+  .at-list__item-container{
+    align-items: start;
   }
 }
 .feedback-box{
@@ -81,20 +77,22 @@
   box-shadow: 0px -8px 10px rgba(50, 50, 50, 0.05);
   .save-group{
     flex: 1;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 1PX solid #FFC500 !important;
+    border-right: 0px !important;
+    background: #FFFBE6!important;
   }
   .submit-group{
-    flex: 2;
-    margin-left: 20px;
+    flex: 1;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
   }
 }
-.at-button--primary {
-  border: 1PX solid #FFD947;
-  background: #FFD947;
-  color: #000000;
-}
-.at-button--secondary {
-  border: 1PX solid #333;
-  background: #fff;
-  color: #333;
+.page-section{
+  .select-date{
+    display: flex;
+    justify-content: center;
+  }
 }
 

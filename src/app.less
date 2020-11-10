@@ -5,10 +5,40 @@ page{
     background-color: #ffffff;
 }
 .mt-20{
-    margin-top:20px;
+  margin-top:20px;
+}
+.mt-40{
+  margin-top:40px;
+}
+.mb-10{
+  margin-bottom: 10px;
 }
 .mb-20{
   margin-bottom: 20px;
+}
+.mr-20{
+  margin-right: 20px;
+}
+.mr-10{
+  margin-right: 10px;
+}
+.pt-10{
+  padding-top: 10px;
+}
+.px-32{
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.px-24{
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.px-12{
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.pt-20{
+  padding-top: 20px;
 }
 .pb-20{
   padding-bottom: 20px;
@@ -16,9 +46,157 @@ page{
 .pb-30{
   padding-bottom: 30px;
 }
+.border-radius-12{
+  border-radius: 12px;
+}
+.line-1-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.checkbox .wx-checkbox-input{
+  width: 34px;
+  height: 34px;
+  border-radius: 100%;
+  border-color: #e8e8e8;
+}
+/* checkbox选中后样式 */
+.checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: #FFD947;
+  border-color:#FFD947;
+}
+/*checkbox选中后图标样式  */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  width: 28px;
+  height: 28px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 22px;
+  color: #FFF;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+.tab-btn-bottom {
+  background: #ffffff;
+  padding: 20px;
+  margin: auto;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1PX solid #e8e8e8;
+  box-shadow: 0px -8px 10px rgba(50, 50, 50, 0.05);
+  z-index: 100;
+}
+.at-button--primary {
+  border: 1PX solid #FFD947!important;
+  background: #FFD947!important;
+  color: #000000!important;
+}
+.at-button--secondary {
+  border: 1PX solid #333!important;
+  background: #fff!important;
+  color: #333!important;
+}
+.at-textarea{
+  border-color: transparent !important;
+  padding: 14px!important;
+}
+.at-list::after{
+  border-color: #e8e8e8 !important;
+}
+.at-list__item-extra .item-extra__info{
+  font-size: 28px!important;
+  color: #666666!important;
+}
+.at-list__item::after{
+  border-bottom: 1PX solid #e8e8e8!important;
+}
+.at-list__item .item-extra__icon-arrow{
+  color: #666666!important;
+  font-size: 38px!important;
+}
+.at-list__item,.at-input__title,.at-input input,.at-textarea__textarea{
+  font-size: 30px !important;
+}
+.at-input::after{
+  border-color: #e8e8e8 !important;
+}
+.at-image-picker__choose-btn{
+  border: 1PX #e8e8e8 dotted !important;
+  border-radius: 0px !important;
+}
+.at-radio__title {
+  font-size: 28px!important;
+}
+.at-radio::before{
+  border-top: 1PX solid #e8e8e8!important;
+}
+.top-line-item::before{
+  content: '';
+  position: absolute;
+  -webkit-transform-origin: center;
+  -ms-transform-origin: center;
+  transform-origin: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  pointer-events: none;
+  top: 0;
+  left: 24px;
+  right: 0;
+  bottom: auto;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  border-top: 1PX solid #e8e8e8;
+}
+.at-tag--active.at-tag--primary {
+  color: #FFF!important;
+  border-color: #333333!important;
+  background-color: #333333!important;
+}
+.at-search-bar__action{
+  background-color: #000000!important;
+}
+.at-checkbox__option--selected .at-checkbox__icon-cnt{
+  background-color: #FFC500!important;
+}
+.at-checkbox__title{
+  font-size: 28px !important;
+}
+.at-checkbox::after{
+  border-bottom: 1PX solid #e8e8e8!important;
+}
+.at-checkbox::before{
+  border-top:0px !important;
+}
+.at-checkbox__option + .at-checkbox__option .at-checkbox__option-wrap::after{
+  border-color:#e8e8e8 !important;
+}
+.at-checkbox__icon-cnt{
+  //border:2px solid #e8e8e8 !important;
+}
 
-//.fixed {
-//    bottom: 0;
-//    /* 在 H5 模式下将会编译成 margin-bottom: 50px，在小程序模式下则会忽略*/
-//    margin-bottom: taro-tabbar-height;
-//}
+.at-list__item-container .item-icon, .info-title .at-icon{
+  position: relative!important;
+}
+.at-list__item-container .item-icon:before, .info-title .at-icon:after{
+  position: absolute;
+  content: '';
+  width: 20px;
+  height: 20px;
+  background-color: #FFC500;
+  opacity: .55;
+  border-radius: 20%;
+  margin: auto;
+  left: 0;
+  top:0;
+  right: 0;
+  bottom: 0;
+}
+
+
+

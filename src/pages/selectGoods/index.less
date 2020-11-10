@@ -1,0 +1,125 @@
+.warehouse-view{
+  .at-tabs__header{
+    position: fixed;
+    padding-top: 100px;
+    z-index: 100;
+  }
+  .at-tabs__body{
+    padding: 190px 0px;
+  }
+}
+.at-search-bar{
+  &.search-bar{
+    background: #FEE57F;
+  }
+  padding: 20px 18px;
+}
+.at-search-bar::after{
+  border-bottom-width: 0px;
+}
+.at-tabs__item{
+  font-size: 32px;
+}
+.at-tabs__item--active{
+  font-weight: bold;
+  color: #000000;
+}
+.at-tabs__item-underline{
+  width: 50%;
+  height: 3PX;
+  margin: auto;
+  right: 0;
+  border-radius: 3PX;
+  background-color: #000000;
+}
+.goods-card{
+  width: 640px;
+  display: flex;
+  border-radius: 12px;
+  margin-left: 10px;
+  box-shadow: 0 6px 12px 0 rgba(0,0,0,.05);
+  .goods-pic{
+    width: 180px;
+    height: 180px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+  .goods-detail{
+    width: 400px;
+    max-height: 200px;
+    padding: 24px 30px 0px 30px;
+    background: #ffffff;
+    border-radius: 12px;
+  }
+  .goods-title{
+    font-size: 28px;
+    font-weight: 500;
+    color: #292627;
+  }
+  .goods-detail-bottom{
+    margin-top: 60px;
+    font-size: 24px;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    .goods-price{
+      color: orangered;
+    }
+    .goods-status{
+      font-size: 20px;
+      font-weight: 500;
+      color: #000000;
+      background: #FFD947;
+      border-radius: 8px;
+      padding: 4px 16px;
+    }
+  }
+}
+.at-tabs__header{
+  background: #FEE57F;
+}
+.checkbox{
+  margin-left: 20px;
+  margin-top: 40px;
+}
+.add-new-good{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+  font-size: 24px;
+  padding-left: 40px;
+  color: #000000;
+  letter-spacing: 1.71px;
+  .add-text{
+    padding-top: 6px;
+  }
+}
+.add-buttons{
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  .add-all{
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 1PX solid #FFC500 !important;
+    border-right: 0px !important;
+    background: #FFFBE6!important;
+    color: #333333!important;
+    padding-left: 50px;
+  }
+  .add-select{
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding-right: 50px;
+  }
+}
+
+
+
+

@@ -1,19 +1,21 @@
 export default {
   pages: [
-    'pages/addGroupBuy/index',
-    'pages/index/index',
+    'pages/login/index',
     'pages/profile/index',
-
+    'pages/index/index',
+    'pages/addGroupBuy/index',
     'pages/messages/index',
     'pages/orders/index',
-    'pages/addClass/index'
+    'pages/addClass/index',
+    'pages/selectGoods/index',
+    'pages/addGood/index',
+    'pages/groupBuyDetail/index',
   ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black',
-    backgroundColor:'#222222',
   },
   tabBar: {
     selectedColor: '#030303',
