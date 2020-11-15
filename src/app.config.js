@@ -1,8 +1,8 @@
 export default {
   pages: [
+    'pages/login/index',
     'pages/profile/index',
     'pages/myGroup/index',
-    'pages/login/index',
     'pages/index/index',
     'pages/addGroupBuy/index',
     'pages/messages/index',
@@ -11,6 +11,8 @@ export default {
     'pages/selectGoods/index',
     'pages/addGood/index',
     'pages/groupBuyDetail/index',
+    'pages/myOrder/index',
+    'pages/goodsList/index',
   ],
   window: {
     backgroundTextStyle: 'light',

@@ -35,30 +35,81 @@ page{
       padding: 20px;
       background-color: #ffffff;
       border-radius: 12px;
+      .card-header{
+        .floor-num{
+          font-size: 26px;
+          color: #666666;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #f2f2f2;
+        }
+        .order-info{
+          display: flex;
+          justify-content: space-between;
+          padding: 16px 0px;
+        }
+        .organizer-info{
+          display: flex;
+          align-items: center;
+        }
+        .organizer-avatar{
+          width: 75px;
+          height: 75px;
+          border-radius: 75px;
+        }
+        .organizer-name{
+          font-size: 30px;
+          color: #333333;
+          margin-left: 20px;
+        }
+        .order-status{
+          font-size: 26px;
+          display: flex;
+          align-items: center;
+          :first-child{
+            margin-right: 20px;
+          }
+        }
+      }
       .card-content{
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        background-color: #FAFAFA;
+        padding: 20px;
+        margin-top: 10px;
+        border-radius: 12px;
       }
-      .group-picture{
-         width: 240px;
-         height: 240px;
+      .good-picture{
+         width: 100px;
+         height: 100px;
+         border-radius: 6px;
       }
-      .group-info{
-        width: 400px;
+      .item-info{
+        width: 500px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         .title{
-          font-size: 30px;
+          font-size: 28px;
           font-weight: bold;
+          margin-bottom: 10px;
         }
         .des{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
           font-size: 26px;
           color: #666666;
         }
-        .tool{
-          font-size: 22px;
-          color: #999999;
+      }
+      .tool{
+        display: flex;
+        justify-content: flex-end;
+        font-size: 26px;
+        color: #999999;
+        margin-top:20px;
+        :first-child{
+          margin-right: 20px;
         }
       }
       .card-bottom{
@@ -92,8 +143,19 @@ page{
           display: flex;
           justify-content: flex-end;
         }
+        .at-button.weChat-btn{
+          background-image: linear-gradient(#00D20c, #00BC0c);
+          color: #ffffff;
+          margin-right: 20px;
+        }
+        .weChat{
+          width: 50px;
+          height: 50px;
+          vertical-align: middle;
+          margin-right: 5px;
+        }
         .at-button{
-          margin: 0px 0px 0px 20px;
+          margin: unset;
           border: 1px solid #e8e8e8;
           color: #666;
         }

@@ -71,6 +71,11 @@ export default class Index extends Component {
       url:`/pages/myGroup/index`,
     })
   }
+  navigateToMyOrder(){
+    Taro.navigateTo({
+      url:`/pages/myOrder/index`,
+    })
+  }
   handleSwitchUserIdentity(){
     Taro.showActionSheet({
       itemColor:'#000',
@@ -83,6 +88,11 @@ export default class Index extends Component {
 
     }).catch((res)=>{
       console.log(res.errMsg)
+    })
+  }
+  navigateToGoodsList(){
+    Taro.navigateTo({
+      url:'/pages/goodsList/index'
     })
   }
   render () {
@@ -103,7 +113,7 @@ export default class Index extends Component {
         className='tab-list border-radius-12'
         selectedColor='#666666'
       />
-    </View> : userIdentityRender =  <AtListItem className='top-line-item' hasBorder={false}  title='我的订单' arrow='right' /> ;
+    </View> : userIdentityRender =  <AtListItem className='top-line-item' hasBorder={false}  title='我的订单' arrow='right' onClick={this.navigateToMyOrder.bind(this)} /> ;
     return (
       <View className='profile-view'>
         <View className='profile-top-bg'></View>
@@ -137,7 +147,7 @@ export default class Index extends Component {
           <View className='profile-title'>常用功能</View>
           <View className='profile-feature-list'>
             <View className='profile-feature-item'>
-              <View className='wrap-icon'>
+              <View className='wrap-icon' onClick={this.navigateToGoodsList.bind(this)}>
                 <View className='font-icon'>库</View>
               </View>
               <View className='text-icon'>商品库</View>

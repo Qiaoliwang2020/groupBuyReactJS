@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '我的拼团',
+  navigationBarTitleText: '我的订单',
   navigationBarBackgroundColor:'#FEE57F'
 }

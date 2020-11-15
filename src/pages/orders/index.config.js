@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '团购'
+  navigationBarTitleText: '拼团'
 }

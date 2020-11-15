@@ -46,7 +46,7 @@ export default class Index extends Component {
 
 
   render () {
-    const tabList = [{ title: '全部' }, { title: '团购中' }, { title: '已结束' },{ title: '草稿箱' }]
+    const tabList = [{ title: '全部' }, { title: '拼团中' }, { title: '已结束' },{ title: '草稿箱' }]
     return (
       <View className='my-group'>
         <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleTabClick.bind(this)}>
