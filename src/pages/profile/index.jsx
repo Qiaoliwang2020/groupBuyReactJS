@@ -76,6 +76,11 @@ export default class Index extends Component {
       url:`/pages/myOrder/index`,
     })
   }
+  navigateToPartnership(){
+    Taro.navigateTo({
+      url:`/pages/partner/index`
+    })
+  }
   handleSwitchUserIdentity(){
     Taro.showActionSheet({
       itemColor:'#000',
@@ -146,13 +151,13 @@ export default class Index extends Component {
         <View className='profile-list mt-20 bg-white border-radius-12'>
           <View className='profile-title'>常用功能</View>
           <View className='profile-feature-list'>
-            <View className='profile-feature-item'>
-              <View className='wrap-icon' onClick={this.navigateToGoodsList.bind(this)}>
+            <View className='profile-feature-item' onClick={this.navigateToGoodsList.bind(this)}>
+              <View className='wrap-icon'>
                 <View className='font-icon'>库</View>
               </View>
               <View className='text-icon'>商品库</View>
             </View>
-            <View className='profile-feature-item'>
+            <View className='profile-feature-item' onClick={this.navigateToPartnership.bind(this)}>
               <View className='wrap-icon'>
                 <View className='font-icon'>伴</View>
               </View>

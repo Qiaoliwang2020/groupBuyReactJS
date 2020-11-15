@@ -13,6 +13,7 @@ export default {
     'pages/groupBuyDetail/index',
     'pages/myOrder/index',
     'pages/goodsList/index',
+    'pages/partner/index',
   ],
   window: {
     backgroundTextStyle: 'light',
