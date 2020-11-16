@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 import React, { Component } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtButton,AtSearchBar } from 'taro-ui'
@@ -33,6 +34,12 @@ export default class Index extends Component {
     console.log('开始搜索')
   }
 
+  navigateToAddNewSite () {
+    Taro.navigateTo({
+      url:'/pages/addPickUpSite/index'
+    })
+  }
+
   render () {
     return (
       <View className='pick-up-site'>
@@ -49,7 +56,7 @@ export default class Index extends Component {
             您还没有添加自提点，请先添加一个自提点
           </View>
           <View className='bottom-btn'>
-            <AtButton type='primary' circle>新增自提点</AtButton>
+            <AtButton type='primary' circle  onClick={this.navigateToAddNewSite.bind(this)}>新增自提点</AtButton>
           </View>
         </View>
       </View>

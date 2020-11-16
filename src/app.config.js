@@ -14,6 +14,8 @@ export default {
     'pages/goodsList/index',
     'pages/partner/index',
     'pages/pickUpSite/index',
+    'pages/addPickUpSite/index',
+
   ],
   window: {
     backgroundTextStyle: 'light',
