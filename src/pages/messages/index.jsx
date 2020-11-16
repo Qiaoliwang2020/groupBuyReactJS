@@ -65,16 +65,6 @@ export default class Index extends Component {
               </Text>
               <AtCard
                 className='message-card'
-                note='查看订单'
-                title='系统通知'
-              >
-                你好，您的团购陶艺0基础体验（交友畅聊）有新订单。
-              </AtCard>
-              <Text className='message-time'>
-                06-07 12:00
-              </Text>
-              <AtCard
-                className='message-card'
                 note='查看详情'
                 title='合作邀请'
               >

@@ -6,7 +6,6 @@ export default {
     'pages/index/index',
     'pages/addGroupBuy/index',
     'pages/messages/index',
-    'pages/orders/index',
     'pages/addClass/index',
     'pages/selectGoods/index',
     'pages/addGood/index',
@@ -14,6 +13,7 @@ export default {
     'pages/myOrder/index',
     'pages/goodsList/index',
     'pages/partner/index',
+    'pages/pickUpSite/index',
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -27,7 +27,7 @@ export default {
     list: [
       {
         pagePath: 'pages/index/index',
-        text: '团购',
+        text: '社区',
         iconPath: './static/img/icon/nav_activity@2x.png',
         selectedIconPath: './static/img/icon/nav_activity_pre@2x.png'
       },

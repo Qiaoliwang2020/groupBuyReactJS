@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '分享拼团',
+  navigationBarTitleText: '拼团社区',
   navigationBarBackgroundColor:'#FEE57F'
 }

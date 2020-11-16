@@ -90,7 +90,7 @@ export default class Index extends Component {
           </View>
           <View className='question-card bg-white'>
             <AtTag className='question-tag' size='small'  type='primary' active={true}>置顶</AtTag>
-            <View className='question-title'>分享拼团大V招募啦！</View>
+            <View className='question-title'>拼团社区大V招募啦！</View>
           </View>
         </View>
         <View className='partner-name bg-white'>
