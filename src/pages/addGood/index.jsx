@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import React, { Component } from 'react'
 import  api from "../../services/api";
 import { View, Text } from '@tarojs/components'
-import { AtInput,AtTextarea,AtDrawer,AtButton,AtList, AtListItem,AtIcon,AtImagePicker,AtRadio,AtToast} from 'taro-ui'
+import { AtInput,AtTextarea,AtDrawer,AtButton,AtList, AtListItem,AtIcon,AtImagePicker,AtRadio,AtToast,AtActionSheet, AtActionSheetItem,AtInputNumber} from 'taro-ui'
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import "taro-ui/dist/style/components/input.scss";
@@ -13,6 +13,8 @@ import "taro-ui/dist/style/components/radio.scss";
 import "taro-ui/dist/style/components/drawer.scss";
 import "taro-ui/dist/style/components/toast.scss";
 import "taro-ui/dist/style/components/icon.scss";
+import "taro-ui/dist/style/components/action-sheet.scss";
+import "taro-ui/dist/style/components/input-number.scss";
 import './index.less'
 
 export default class Index extends Component {
@@ -41,6 +43,9 @@ export default class Index extends Component {
       unitPanel:false,
       warning:false,
       warningText:'',
+      setStockSheet:false,
+      defaultStock:'无限量',
+      stock:0,
     }
   }
   handleNameChange=(name)=>{
@@ -71,7 +76,8 @@ export default class Index extends Component {
   }
   openGroupPriceChange = e =>{
     this.setState({
-      groupPriceStatus: e.detail.value
+      groupPriceStatus: e.detail.value,
+      setStockSheet:false
     })
   }
   handleGroupPriceChange = value =>{
@@ -85,6 +91,12 @@ export default class Index extends Component {
   showUnitPanel =()=>{
     this.setState({
       unitPanel:true,
+      setStockSheet:false,
+    })
+  }
+  closeUnitPanel=()=>{
+    this.setState({
+      unitPanel:false,
     })
   }
   checkUnitChange =()=>{
@@ -109,7 +121,23 @@ export default class Index extends Component {
         warningText:'请选择一个单位'
       })
     }
-
+  }
+  handleSetStockSheet =()=>{
+    this.setState({
+      setStockSheet:!this.state.setStockSheet,
+      unitPanel:false,
+    })
+  }
+  setStockNone =()=>{
+    this.setState({
+      stock:0,
+      setStockSheet:false,
+    })
+  }
+  setStockNumber =(value)=>{
+    this.setState({
+      stock:value,
+    })
   }
   render () {
     let warningEle = '';
@@ -154,35 +182,18 @@ export default class Index extends Component {
                 placeholder='请输入商品说明...'
               />
             </View>
-            <AtListItem title='请选择单位' className='top-line-item'
-                        extraText={this.state.unitValue}
-                        onClick={this.showUnitPanel.bind(this)}
-                        arrow='right' />
-            <AtDrawer
-              show={this.state.unitPanel}
-              mask
-              right
-            >
-              <View className='drawer-item'>
-                <AtRadio
-                  options={this.state.unitOptions}
-                  value={this.state.unitSelector}
-                  onClick={this.onUnitChange.bind(this)}
-                />
-              </View>
-              <View className='drawer-item'>
-                <View className='px-32 mt-40'>
-                 <AtButton type='primary' size='small' circle onClick={this.checkUnitChange.bind(this)}>确认选择</AtButton>
-                </View>
-                <View className='px-32 mt-40'>
-                  <AtButton type='secondary' circle  size='small'>
-                    <AtIcon value='add' size='16' />
-                    添加自定义单位
-                  </AtButton>
-                </View>
-              </View>
-
-            </AtDrawer>
+            <AtListItem
+              title='请选择单位'
+              className='top-line-item'
+              extraText={this.state.unitValue}
+              onClick={this.showUnitPanel.bind(this)}
+              arrow='right' />
+            <AtListItem
+              title='设置库存'
+              arrow='right'
+              extraText={this.state.stock > 0 ? this.state.stock : this.state.defaultStock}
+              onClick={this.handleSetStockSheet.bind(this)}
+            />
             <AtListItem
               title='设置商品规格'
               isSwitch
@@ -235,6 +246,49 @@ export default class Index extends Component {
           <AtButton type='primary' size='normal' circle='true'>确定</AtButton>
         </View>
         {warningEle}
+
+        <AtActionSheet isOpened={this.state.setStockSheet} cancelText='确定' title='默认库存无限量至多999,或可点击输入库存' onCancel={ this.handleSetStockSheet.bind(this) }>
+          <AtActionSheetItem onClick={this.setStockNone.bind(this)}>
+            无限量
+          </AtActionSheetItem>
+          <AtActionSheetItem>
+            <AtInputNumber className='stock-num-input'
+              min={0}
+              max={999}
+              step={1}
+              value={this.state.stock}
+              onChange={this.setStockNumber.bind(this)}
+            />
+          </AtActionSheetItem>
+        </AtActionSheet>
+
+        <AtDrawer
+          show={this.state.unitPanel}
+          onClose={this.closeUnitPanel.bind(this)}
+          mask
+          right
+        >
+          <View className='drawer-item'>
+            <AtRadio
+              options={this.state.unitOptions}
+              value={this.state.unitSelector}
+              onClick={this.onUnitChange.bind(this)}
+            />
+          </View>
+          <View className='drawer-item'>
+            <View className='px-32 mt-40'>
+              <AtButton type='primary' size='small' circle onClick={this.checkUnitChange.bind(this)}>确认选择</AtButton>
+            </View>
+            <View className='px-32 mt-40'>
+              <AtButton type='secondary' circle  size='small'>
+                <AtIcon value='add' size='16' />
+                添加自定义单位
+              </AtButton>
+            </View>
+          </View>
+
+        </AtDrawer>
+
       </view>
     )
   }
