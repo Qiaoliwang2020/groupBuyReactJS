@@ -51,6 +51,19 @@ export default class Index extends Component {
                      onActionClick={this.onSearchActionClick.bind(this)}
         />
         <View className='pick-up-list'>
+          <View className='site-item'>
+             <View className='site-name'>Le Crois</View>
+             <View className='address'>
+               235 Springvale Road, Glen Waverley, Victoria, Australia
+             </View>
+            <View className='item-bottom'>
+              <View className='green'>已设置定位</View>
+              <View>取消定位</View>
+              <View>定位</View>
+              <View>编辑</View>
+              <View>删除</View>
+            </View>
+          </View>
           <View className='no-data'>
             <View className='no-data-icon' />
             您还没有添加自提点，请先添加一个自提点

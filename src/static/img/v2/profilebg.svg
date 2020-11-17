@@ -13,7 +13,7 @@
                     <mask id="mask-2" fill="white">
                         <use xlink:href="#path-1"></use>
                     </mask>
-                    <use id="Mask" fill="#FEE57F" xlink:href="#path-1"></use>
+                    <use id="Mask" fill="#FFD947" xlink:href="#path-1"></use>
                     <g id="Group-3" mask="url(#mask-2)">
                         <g transform="translate(303.000000, 23.000000)">
                             <path d="M66,51.2633649 L66,66 L51.2633649,66 C46.4041807,68.5545047 40.8708971,70 35,70 C15.6700338,70 0,54.3299662 0,35 C0,15.6700338 15.6700338,0 35,0 C54.3299662,0 70,15.6700338 70,35 C70,40.8708971 68.5545047,46.4041807 66,51.2633649 Z" id="Combined-Shape" fill="#FFBB47" fill-rule="evenodd" opacity="0.600000024"></path>

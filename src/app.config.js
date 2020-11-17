@@ -1,5 +1,6 @@
 export default {
   pages: [
+
     'pages/login/index',
     'pages/profile/index',
     'pages/myGroup/index',
@@ -19,7 +20,7 @@ export default {
   ],
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
+    navigationBarBackgroundColor: '#FFD947',
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black',
   },
