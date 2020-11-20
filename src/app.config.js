@@ -1,10 +1,10 @@
 export default {
   pages: [
-
+    'pages/index/index',
     'pages/login/index',
     'pages/profile/index',
     'pages/myGroup/index',
-    'pages/index/index',
+
     'pages/addGroupBuy/index',
     'pages/messages/index',
     'pages/addClass/index',
@@ -16,7 +16,8 @@ export default {
     'pages/partner/index',
     'pages/pickUpSite/index',
     'pages/addPickUpSite/index',
-
+    'pages/deliveryAreas/index',
+    'pages/addDeliveryArea/index',
   ],
   window: {
     backgroundTextStyle: 'light',

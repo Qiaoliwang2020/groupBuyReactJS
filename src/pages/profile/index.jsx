@@ -105,6 +105,11 @@ export default class Index extends Component {
       url:'/pages/pickUpSite/index'
     })
   }
+  navigateToDeliveryArea(){
+    Taro.navigateTo({
+      url:'/pages/deliveryAreas/index'
+    })
+  }
   render () {
     let userIdentity = this.state.userIdentity,userIdentityRender;
     userIdentity ==='seller' ? userIdentityRender = <View className='user-seller'>
@@ -174,7 +179,7 @@ export default class Index extends Component {
               </View>
               <View className='text-icon'>自提点</View>
             </View>
-            <View className='profile-feature-item'>
+            <View className='profile-feature-item' onClick={this.navigateToDeliveryArea.bind(this)}>
               <View className='wrap-icon'>
                 <View className='font-icon'>区</View>
               </View>
