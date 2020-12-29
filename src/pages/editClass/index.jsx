@@ -11,9 +11,17 @@ import './index.less'
 
 export default class Index extends Component {
 
+  componentDidMount () {
+    let currentId = Taro.getCurrentInstance().router.params.id;
+    this.setState({
+      currentId:currentId
+    })
+    this.getCategory(currentId);
+  }
   constructor () {
     super(...arguments)
     this.state = {
+      currentId:'',
       name: '',
       description:''
     }
@@ -32,7 +40,22 @@ export default class Index extends Component {
     // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
     return description
   }
-  addCategories(){
+  getCategory(currentId){
+    let params ={
+      id:currentId
+    }
+    let editC = api.get('/categories/getCategory',params,'application/json');
+
+    editC.then((res)=>{
+      this.setState({
+        name:res.data.name,
+        description:res.data.description
+      })
+    }).catch((err)=>{
+      console.log(err,'err');
+    })
+  }
+  editCategories(){
     if (!this.state.name){
       Taro.showToast({
         title: '请输入分类标题',
@@ -42,23 +65,22 @@ export default class Index extends Component {
       return false;
     }
     let params = {
+      _id :this.state.currentId,
       name:this.state.name,
       description:this.state.description,
     }
-    let addCategories =  api.post('/categories/addCategories',params,'application/json')
-    addCategories.then(()=>{
+    let editCategories =  api.put('/categories/updateCategory',params,'application/json')
+    editCategories.then(()=>{
       Taro.showToast({
-        title: '添加成功',
-        icon:'success',
+        title: "修改成功",
+        icon:"success",
         duration: 2000
       })
+
     }).catch((err)=>{
-      Taro.showToast({
-        title: err.errMsg,
-        icon:'loading',
-        duration: 2000
-      })
+      console.log(err,'err')
     })
+
     setTimeout(()=>{
         Taro.navigateBack({
           delta: 1
@@ -88,7 +110,7 @@ export default class Index extends Component {
           </AtForm>
         </View>
         <View className='px-24 mt-40'>
-          <AtButton type='primary' size='normal' circle='true' onClick={this.addCategories.bind(this)}>确定</AtButton>
+          <AtButton type='primary' size='normal' circle='true' onClick={this.editCategories.bind(this)}>确定</AtButton>
         </View>
       </view>
     )

@@ -6,13 +6,13 @@ const token = ''
 
 export default {
     baseOptions(params,method = 'GET'){
-       
+
         let { url, data } = params
         let contenType = 'application/x-www-form-urlencoded'
         contenType = params.contenType || contenType
 
         console.log(params,'params')
-        
+
         const option ={
             isShowLoading:false,
             loadingText:'loading....',
@@ -44,5 +44,10 @@ export default {
     post(url,data,contenType){
         let params = {url,data,contenType}
         return this.baseOptions(params,'POST')
+    },
+    put(url,data,contenType){
+      let params = {url,data,contenType}
+      return this.baseOptions(params,'PUT')
     }
+
 }

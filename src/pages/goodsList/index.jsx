@@ -46,7 +46,7 @@ export default class Index extends Component {
 
   navigateToClassManagement(){
     Taro.navigateTo({
-      url:'/pages/addClass/index'
+      url:'/pages/classManagement/index'
     })
   }
   navigateToAddgood(){

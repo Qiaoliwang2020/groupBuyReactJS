@@ -1,15 +1,15 @@
 export default {
   pages: [
-    'pages/index/index',
+    'pages/addGood/index',
     'pages/login/index',
     'pages/profile/index',
     'pages/myGroup/index',
-
+    'pages/index/index',
     'pages/addGroupBuy/index',
     'pages/messages/index',
     'pages/addClass/index',
+    'pages/editClass/index',
     'pages/selectGoods/index',
-    'pages/addGood/index',
     'pages/groupBuyDetail/index',
     'pages/myOrder/index',
     'pages/goodsList/index',
@@ -18,6 +18,8 @@ export default {
     'pages/addPickUpSite/index',
     'pages/deliveryAreas/index',
     'pages/addDeliveryArea/index',
+    'pages/classManagement/index',
+
   ],
   window: {
     backgroundTextStyle: 'light',

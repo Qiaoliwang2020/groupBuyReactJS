@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import React, { Component } from 'react'
 import  api from "../../services/api";
-import { View, Text } from '@tarojs/components'
+import { View, Picker } from '@tarojs/components'
 import { AtInput,AtTextarea,AtDrawer,AtButton,AtList, AtListItem,AtIcon,AtImagePicker,AtRadio,AtToast,AtActionSheet, AtActionSheetItem,AtInputNumber} from 'taro-ui'
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
@@ -46,7 +46,29 @@ export default class Index extends Component {
       setStockSheet:false,
       defaultStock:'无限量',
       stock:0,
+      categories:[],
+      categoriesChecked:'全部'
     }
+  }
+  componentDidShow () {
+    this.getCategories();
+  }
+  getCategories=()=>{
+    let params = {};
+    let list = api.get('/categories/getCategories',params,'application/json');
+    list.then((res)=>{
+      if(res.statusCode === 200){
+        let dataArray = res.data;
+        let categoriesArray = dataArray.map((item)=>{
+          return item.category;
+        })
+        this.setState({
+          categories:categoriesArray
+        })
+      }
+    }).catch((err)=>{
+      console.log(err,'err')
+    })
   }
   handleNameChange=(name)=>{
 
@@ -64,6 +86,7 @@ export default class Index extends Component {
     })
   }
   onImageChange(files) {
+    console.log(files,'files');
     this.setState({
       files
     })
@@ -73,6 +96,12 @@ export default class Index extends Component {
   }
   onImageClick (index, file) {
     console.log(index, file)
+  }
+  onChangeCategories = e => {
+    console.log(e,'e')
+    this.setState({
+      categoriesChecked: this.state.categories[e.detail.value]
+    })
   }
   openGroupPriceChange = e =>{
     this.setState({
@@ -173,7 +202,13 @@ export default class Index extends Component {
               value={this.state.name}
               onChange={this.handleNameChange.bind(this)}
             />
-            <AtListItem title='商品分类' extraText='暂无分类' arrow='right' />
+            <Picker mode='selector' range={this.state.categories} onChange={this.onChangeCategories}>
+              <AtListItem
+                title='商品分类'
+                extraText={this.state.categoriesChecked}
+                arrow='right'
+              />
+            </Picker>
             <View className='textarea-title'>商品说明</View>
             <View className='px-12'>
               <AtTextarea
