@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import React, { Component } from 'react'
 import  api from "../../services/api";
 import { View, Picker } from '@tarojs/components'
-import { AtInput,AtTextarea,AtDrawer,AtButton,AtList, AtListItem,AtIcon,AtImagePicker,AtRadio,AtToast,AtActionSheet, AtActionSheetItem,AtInputNumber} from 'taro-ui'
+import { AtInput,AtTextarea,AtDrawer,AtButton,AtList, AtListItem,AtIcon,AtImagePicker,AtRadio,AtToast,AtActionSheet, AtActionSheetItem,AtInputNumber,AtModal, AtModalHeader, AtModalContent, AtModalAction} from 'taro-ui'
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import "taro-ui/dist/style/components/input.scss";
@@ -15,6 +15,7 @@ import "taro-ui/dist/style/components/toast.scss";
 import "taro-ui/dist/style/components/icon.scss";
 import "taro-ui/dist/style/components/action-sheet.scss";
 import "taro-ui/dist/style/components/input-number.scss";
+import "taro-ui/dist/style/components/modal.scss";
 import './index.less'
 
 export default class Index extends Component {
@@ -24,30 +25,29 @@ export default class Index extends Component {
     this.state = {
       name: '',
       description:'',
+      addUnit:false,
+      unitName:'',
       unitSelector: '',
       unitValue:'',
-      unitOptions:[
-        { label: '件', value: '0', },
-        { label: 'KG', value: '1' },
-        { label: '500g', value: '2' },
-        { label: 'Dozen', value: '3', },
-        { label: '箱', value: '4' },
-        { label: '条', value: '5' },
-        { label: '个', value: '6' },
-        { label: '袋', value: '7' }
-      ],
+      unitId:'',
+      unitOptions:[],
       files: [],
-      originPrice:'',
-      groupPrice:'',
+      thumbs:[],
+      showUploadBtn:true,
+      originPrice:null,
+      groupPrice:null,
       groupPriceStatus:false,
       unitPanel:false,
       warning:false,
       warningText:'',
       setStockSheet:false,
       defaultStock:'无限量',
-      stock:0,
+      stock:999,
       categories:[],
-      categoriesChecked:'全部'
+      categoryId:'',
+      categoryOptions:[],
+      categoriesChecked:'全部',
+      Submited:false,
     }
   }
   componentDidShow () {
@@ -63,7 +63,8 @@ export default class Index extends Component {
           return item.category;
         })
         this.setState({
-          categories:categoriesArray
+          categories:dataArray,
+          categoryOptions:categoriesArray
         })
       }
     }).catch((err)=>{
@@ -71,7 +72,14 @@ export default class Index extends Component {
     })
   }
   handleNameChange=(name)=>{
-
+    this.setState({
+      name:name
+    })
+  }
+  handleDescriptionChange =(des)=>{
+    this.setState({
+      description:des
+    })
   }
   onUnitChange = value => {
     this.setState({
@@ -90,6 +98,15 @@ export default class Index extends Component {
     this.setState({
       files
     })
+    if(files.length===8){  // 最多三张图片 隐藏添加图片按钮
+      this.setState({
+        showUploadBtn:false
+      })
+    }else{
+      this.setState({
+        showUploadBtn:true
+      })
+    }
   }
   onFail (mes) {
     console.log(mes)
@@ -97,10 +114,30 @@ export default class Index extends Component {
   onImageClick (index, file) {
     console.log(index, file)
   }
+  onImageUpload=(files,callback)=>{
+    let thumbArray =[],_this = this;
+    for(let i = 0;i<files.length;i++){
+      Taro.uploadFile({
+        url: 'http://192.168.0.101:3000/upload/uploadFile',
+        filePath: files[i].url,
+        header:{
+          'content-type': 'multipart/form-data',
+        },
+        name: 'file',
+        success: function (res){
+          let dataObj = JSON.parse(res.data)
+          // collect picture id
+          thumbArray.push(dataObj.picId);
+          // callback
+          callback(thumbArray,_this);
+        }
+      })
+    }
+  }
   onChangeCategories = e => {
-    console.log(e,'e')
     this.setState({
-      categoriesChecked: this.state.categories[e.detail.value]
+      categoriesChecked: this.state.categoryOptions[e.detail.value],
+      categoryId:this.state.categories[e.detail.value].id
     })
   }
   openGroupPriceChange = e =>{
@@ -114,13 +151,25 @@ export default class Index extends Component {
        groupPrice:value
      })
   }
-  openSKUChange = e =>{
-
-  }
+  // openSKUChange = e =>{
+  //
+  // }
   showUnitPanel =()=>{
     this.setState({
       unitPanel:true,
       setStockSheet:false,
+    })
+    this.getUnits();
+  }
+  getUnits =()=>{
+    let getUnits = api.get('/units/getUnits');
+    let units =[];
+    getUnits.then((res)=>{
+      units = res.data;
+      let unitsArr = units.map(elm => ({label:elm.unit,value:elm.id}));
+      this.setState({
+        unitOptions:unitsArr
+      })
     })
   }
   closeUnitPanel=()=>{
@@ -128,8 +177,55 @@ export default class Index extends Component {
       unitPanel:false,
     })
   }
+  handleAddUnitStatus = () =>{
+    this.setState({
+      unitName:'',
+      unitPanel:false,
+      addUnit:!this.state.addUnit
+    })
+  }
+  handleUnitNameChange = value =>{
+    this.setState({
+      unitName:value
+    })
+  }
+  handleAddUnit = () =>{
+    if (!this.state.unitName){
+      Taro.showToast({
+        title: '请输入单位名称',
+        icon:'none',
+        duration: 2000
+      })
+      return false;
+    }
+    let params = {
+      name:this.state.unitName,
+    }
+    let addUnits =  api.post('/units/addUnit',params,'application/json')
+    addUnits.then((res)=>{
+      let initId = res.data.data.insertedId;
+      console.log(initId,'res');
+      if(res.statusCode === 200){
+        Taro.showToast({
+          title: '添加成功',
+          icon:'success',
+          duration: 2000
+        })
+        // close the modal
+        this.handleAddUnitStatus();
+        // open the units panel
+        this.showUnitPanel();
+      }
+    }).catch((err)=>{
+      Taro.showToast({
+        title: err.errMsg,
+        icon:'loading',
+        duration: 2000
+      })
+    })
+  }
   checkUnitChange =()=>{
-    let label ='';
+    let unit ='';
     let selected = this.state.unitSelector;
 
     this.setState({
@@ -138,10 +234,11 @@ export default class Index extends Component {
     })
 
     if (selected) {
-      label = this.state.unitOptions[this.state.unitSelector].label;
+      unit = this.state.unitOptions.find((unit) => unit.value === this.state.unitSelector);
       this.setState({
         unitPanel:false,
-        unitValue:label
+        unitValue:unit.label,
+        unitId:unit.value
       })
     }
     else {
@@ -159,7 +256,7 @@ export default class Index extends Component {
   }
   setStockNone =()=>{
     this.setState({
-      stock:0,
+      stock:999,
       setStockSheet:false,
     })
   }
@@ -167,6 +264,91 @@ export default class Index extends Component {
     this.setState({
       stock:value,
     })
+  }
+  addGoodsInfo(thumbs,_this){
+
+    let {name,description,unitId,categoryId,originPrice,groupPrice,stock,files} = _this.state;
+    let images =thumbs;
+
+    let validObj = {
+      '商品名称':name,
+      '商品说明':description,
+      '商品分类':categoryId,
+      '单位':unitId,
+      '原价':originPrice,
+      '库存':stock
+    }
+    let errors = _this.VaidNull(validObj);
+    if(errors.length>0){
+      errors.forEach((item)=>{
+        Taro.showToast({
+          title:item,
+          icon:'none',
+          duration:2000
+        })
+      })
+    }else{
+      if(images.length === files.length){ // when pictures completed uploaded  
+        let goods ={
+          name:name,
+          categoryId:categoryId,
+          description:description,
+          unitId :unitId,
+          stock:stock,
+          thumbs:images,
+          originalPrice:originPrice,
+          groupPrice:groupPrice,
+          date:Date.now()
+        }
+        // post goods information to server 
+        let createGoods = api.post('/goods/addGoods',goods,'application/json');
+        createGoods.then((res)=>{
+          if(res.statusCode == 200){
+             // set the submit button as disabled
+             _this.setState({
+               Submited:true
+             })
+             // notice success
+             Taro.showToast({
+               title:'创建商品成功',
+               icon:'success',
+               duration:2000
+             })
+             // back to goods list page
+             Taro.navigateTo({
+              url:`/pages/goodsList/index`,
+            })
+          }
+        },(err)=>{
+          console.log(err,'err')
+        })
+      }
+    } 
+  }
+
+  submitGoodInfo =()=>{
+    let {files} = this.state;
+    if(files.length > 0){
+      this.onImageUpload(files,this.addGoodsInfo);
+    }else{
+      Taro.showToast({
+        title:'请先至少上传1张图片',
+        icon:'none',
+        duration:2000
+      })
+    } 
+  }
+  VaidNull=(obj)=>{
+    let ValidValue = Object.keys(obj).map((key,index)=>{
+       if(obj[key] === undefined || obj[key]==''){
+        return `${key}是空的,请填写${key}值。`;
+       }
+    })
+    let filtered = ValidValue.filter(function (el) {
+      return el != null;
+    });
+    let errors = filtered.reverse();
+    return errors;
   }
   render () {
     let warningEle = '';
@@ -186,6 +368,7 @@ export default class Index extends Component {
     if (this.state.warning){
       warningEle = <AtToast isOpened text={this.state.warningText} icon='close-circle'></AtToast>
     }
+    let { showUploadBtn } =this.state
     return (
       <view className='add-good-container'>
         <View className='basic-info bg-white'>
@@ -202,7 +385,7 @@ export default class Index extends Component {
               value={this.state.name}
               onChange={this.handleNameChange.bind(this)}
             />
-            <Picker mode='selector' range={this.state.categories} onChange={this.onChangeCategories}>
+            <Picker mode='selector' range={this.state.categoryOptions} onChange={this.onChangeCategories}>
               <AtListItem
                 title='商品分类'
                 extraText={this.state.categoriesChecked}
@@ -215,6 +398,7 @@ export default class Index extends Component {
                 value={this.state.description}
                 maxLength={140}
                 placeholder='请输入商品说明...'
+                onChange={this.handleDescriptionChange.bind(this)}
               />
             </View>
             <AtListItem
@@ -226,30 +410,30 @@ export default class Index extends Component {
             <AtListItem
               title='设置库存'
               arrow='right'
-              extraText={this.state.stock > 0 ? this.state.stock : this.state.defaultStock}
+              extraText={this.state.stock === 999 ?this.state.defaultStock : this.state.stock}
               onClick={this.handleSetStockSheet.bind(this)}
             />
-            <AtListItem
-              title='设置商品规格'
-              isSwitch
-              switchColor='#FFD947'
-              onSwitchChange={this.openSKUChange}
-            />
+            {/*<AtListItem*/}
+            {/*  title='设置商品规格'*/}
+            {/*  isSwitch*/}
+            {/*  switchColor='#FFD947'*/}
+            {/*  onSwitchChange={this.openSKUChange}*/}
+            {/*/>*/}
           </AtList>
         </View>
         <View className='basic-info bg-white mt-20'>
           <View className='info-title'>
             <AtIcon value='image' size='20'  className='mr-10'></AtIcon>
-            商品图片（最多可添加9张）
+            商品图片（最多可添加8张）
           </View>
           <AtList className='border-radius-12 pt-20 pb-20'>
             <AtImagePicker
-              count={9}
               length={4}
               files={this.state.files}
               onChange={this.onImageChange.bind(this)}
               onFail={this.onFail.bind(this)}
               onImageClick={this.onImageClick.bind(this)}
+              showAddBtn={showUploadBtn}
             />
           </AtList>
         </View>
@@ -278,10 +462,9 @@ export default class Index extends Component {
           </AtList>
         </View>
         <View className='mt-40'>
-          <AtButton type='primary' size='normal' circle='true'>确定</AtButton>
+          <AtButton type='primary' disabled={this.state.Submited} size='normal' circle='true' onClick={this.submitGoodInfo.bind(this)}>确定</AtButton>
         </View>
         {warningEle}
-
         <AtActionSheet isOpened={this.state.setStockSheet} cancelText='确定' title='默认库存无限量至多999,或可点击输入库存' onCancel={ this.handleSetStockSheet.bind(this) }>
           <AtActionSheetItem onClick={this.setStockNone.bind(this)}>
             无限量
@@ -315,15 +498,30 @@ export default class Index extends Component {
               <AtButton type='primary' size='small' circle onClick={this.checkUnitChange.bind(this)}>确认选择</AtButton>
             </View>
             <View className='px-32 mt-40'>
-              <AtButton type='secondary' circle  size='small'>
+              <AtButton type='secondary' circle  size='small' onClick={this.handleAddUnitStatus.bind(this)}>
                 <AtIcon value='add' size='16' />
                 添加自定义单位
               </AtButton>
             </View>
           </View>
-
         </AtDrawer>
 
+        <AtModal isOpened={this.state.addUnit}>
+          <AtModalHeader>添加单位</AtModalHeader>
+          <AtModalContent>
+            <AtInput className={this.state.addUnit ? 'show' :' hide'}
+              name='value'
+              title='单位'
+              type='text'
+              placeholder='单位名称'
+              value={this.state.unitName}
+              onChange={this.handleUnitNameChange.bind(this)}
+            />
+          </AtModalContent>
+          <AtModalAction>
+            <button onClick={this.handleAddUnitStatus.bind(this)}>取消</button>
+            <button onClick={this.handleAddUnit.bind(this)}>确定</button> </AtModalAction>
+        </AtModal>
       </view>
     )
   }

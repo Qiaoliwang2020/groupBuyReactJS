@@ -1,6 +1,6 @@
 export default {
   pages: [
-    'pages/addGood/index',
+    'pages/goodsList/index',
     'pages/login/index',
     'pages/profile/index',
     'pages/myGroup/index',
@@ -12,7 +12,7 @@ export default {
     'pages/selectGoods/index',
     'pages/groupBuyDetail/index',
     'pages/myOrder/index',
-    'pages/goodsList/index',
+    'pages/addGood/index',
     'pages/partner/index',
     'pages/pickUpSite/index',
     'pages/addPickUpSite/index',
