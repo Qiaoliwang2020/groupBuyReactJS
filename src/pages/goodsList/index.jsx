@@ -12,19 +12,48 @@ import "taro-ui/dist/style/components/tabs.scss";
 import './index.less'
 
 export default class Index extends Component {
-  componentDidMount () {
-
+  componentDidShow () {
+     this.getCategories();
+     this.getAllGoods();
   }
   constructor () {
     super(...arguments)
     this.state = {
       search: '',
+      categories:[],
+      goodsList:[],
+      categoryGoodsList:[],
       categoryCurrent: 0,
       subCurrent:0,
     }
   }
   handleIndexClick (value) {
-    console.log(value,'index')
+    let _this = this;
+    let categoryId = this.state.categories[value].id;
+    if(value === 0 && categoryId == ''){
+      _this.getAllGoods();
+    }else{
+      Taro.showLoading({
+        title: '加载中',
+      })
+      let getCategoryGoods = api.get('/goods/getGoods',{categoryId:categoryId},'application/json');
+      getCategoryGoods.then((res)=>{
+        console.log(res.data.data,'res');
+        _this.setState({
+          categoryGoodsList:res.data.data
+        })
+        Taro.hideLoading();
+      },(err)=>{
+        Taro.hideLoading();
+        // show error
+        Taro.showToast({
+          title: err.errMsg,
+          icon:'loading',
+          duration: 2000
+        })
+        console.log(err,'err');
+      })
+    }
     this.setState({
       categoryCurrent: value
     })
@@ -54,8 +83,107 @@ export default class Index extends Component {
       url:'/pages/addGood/index'
     })
   }
+  getCategories=()=>{
+    let params = {};
+    let all = {title:'全部',id:''}; // set all category
+    // get categories
+    let list = api.get('/categories/getCategories',params,'application/json');
+    list.then((res)=>{
+      // if success
+      if(res.statusCode === 200){
+        let dataArray = res.data;
+        // change data as new array which suitable for tablist
+        let categoriesArray = dataArray.map((item)=>{
+          return {title:item.category,id:item.id};
+        })
+        // add all at the first position of category array
+        categoriesArray.unshift(all);
+        // set categories
+        this.setState({
+          categories:categoriesArray
+        })
+      }
+    }).catch((err)=>{
+      // show error
+      Taro.showToast({
+        title: err.errMsg,
+        icon:'loading',
+        duration: 2000
+      })
+      console.log(err,'err')
+    })
+  }
+
+  getAllGoods=()=>{
+    let _this = this;
+    let getAllGoods = api.get('/goods/getGoods',{},'application/json');
+    Taro.showLoading({
+      title: '加载中',
+    })
+    getAllGoods.then((res)=>{
+      _this.setState({
+        goodsList:res.data.data
+      })
+      Taro.hideLoading();
+    }).catch((err)=>{
+      Taro.hideLoading();
+      // show error
+      Taro.showToast({
+        title: err.errMsg,
+        icon:'loading',
+        duration: 2000
+      })
+      console.log(err,'err');
+    })
+  }
+  editGoods=(value)=>{
+    let currentId =  value.target.dataset.id;
+    Taro.navigateTo({
+      url:`/pages/editGoods/index?id=${currentId}`
+    })
+  }
 
   render () {
+    let {categories,goodsList,categoryGoodsList} = this.state;
+    let renderGoods =  <View> 
+      {goodsList.map((goods)=>{
+         return <View className='goods-card'>
+         <image className='goods-pic' src={'data:image/png;base64,'+goods.thumbs[0].img} mode='aspectFill'></image>
+         <View className='goods-detail'>
+           <View className='goods-title line-1-ellipsis'>{goods.name}</View>
+           <View className='goods-detail-bottom'>
+             <View className='goods-price'>${goods.originalPrice}</View>
+             <View className='goods-status'>
+               <View className='edit mr-20' data-id={goods._id} onClick={this.editGoods.bind(this)}>编辑</View>
+               <View className='del'>删除</View>
+             </View>
+           </View>
+         </View>
+       </View>
+      })}
+      </View>
+     let renderCategoryGoods = <View> 
+      {categoryGoodsList.map((goods)=>{
+          return <View className='goods-card'>
+          <image className='goods-pic' src={'data:image/png;base64,'+goods.thumbs[0].img} mode='aspectFill'></image>
+          <View className='goods-detail'>
+            <View className='goods-title line-1-ellipsis'>{goods.name}</View>
+            <View className='goods-detail-bottom'>
+              <View className='goods-price'>${goods.originalPrice}</View>
+              <View className='goods-status'>
+                <View className='edit mr-20' data-id={goods._id} onClick={this.editGoods.bind(this)}>编辑</View>
+                <View className='del'>删除</View>
+              </View>
+            </View>
+          </View>
+        </View>
+      })}
+     </View>
+    let TabPanes =categories.map((c,i)=>{
+      return <AtTabsPane className='goods-list' current={this.state.categoryCurrent} index={i}>
+       {i === 0 ? renderGoods : renderCategoryGoods}
+    </AtTabsPane>
+    })
     return (
       <view className='warehouse-view'>
         <AtSearchBar className='search-bar'
@@ -69,17 +197,12 @@ export default class Index extends Component {
           <AtTabs
             current={this.state.categoryCurrent}
             scroll
-            tabList={[
-              { title: '全部' },
-              { title: '分类2' },
-              { title: '分类3' },
-              { title: '分类4' },
-              { title: '分类5' },
-              { title: '分类6' }
-            ]}
+            animated={false}
+            tabList={this.state.categories}
+            key={new Date().getTime()}
             onClick={this.handleIndexClick.bind(this)}>
-            <AtTabsPane current={this.state.categoryCurrent}>
-              <View className='sub-category-tab'>
+              {TabPanes}
+              {/* <View className='sub-category-tab'>
                 <AtTabs
                   current={this.state.subCurrent}
                   scroll
@@ -126,8 +249,9 @@ export default class Index extends Component {
                     </View>
                   </AtTabsPane>
                 </AtTabs>
-              </View>
-            </AtTabsPane>
+              </View> */}
+               {/* {renderGoods}
+               {renderCategoryGoods} */}
           </AtTabs>
         </View>
         <View className='tab-btn-bottom'>

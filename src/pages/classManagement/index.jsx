@@ -51,6 +51,7 @@ export default class Index extends Component {
       })
       Taro.hideLoading();
     }).catch((err)=>{
+      Taro.hideLoading();
       Taro.showToast({
         title: err.errMsg,
         icon:'loading',

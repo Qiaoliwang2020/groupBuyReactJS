@@ -19,6 +19,7 @@ export default {
     'pages/deliveryAreas/index',
     'pages/addDeliveryArea/index',
     'pages/classManagement/index',
+    'pages/editGoods/index',
 
   ],
   window: {

@@ -17,7 +17,8 @@ import "taro-ui/dist/style/components/icon.scss";
 import "taro-ui/dist/style/components/action-sheet.scss";
 import "taro-ui/dist/style/components/input-number.scss";
 import "taro-ui/dist/style/components/modal.scss";
-import './index.less'
+import '../addGood/index.less';
+import './index.less';
 
 export default class Index extends Component {
 
@@ -51,8 +52,12 @@ export default class Index extends Component {
       Submited:false,
     }
   }
+  componentDidMount () {
+    this.getCurrentGoods();
+  }
   componentDidShow () {
     this.getCategories();
+    this.getUnits();
   }
   getCategories=()=>{
     let params = {};
@@ -70,6 +75,54 @@ export default class Index extends Component {
       }
     }).catch((err)=>{
       console.log(err,'err')
+    })
+  }
+  getCurrentGoods=()=>{
+    let _this = this;
+    let goodsId = Taro.getCurrentInstance().router.params.id;
+    Taro.showLoading({
+      title: '加载中',
+    })
+    let getGoods = api.get('/goods/getGoods',{goodsId:goodsId},'application/json');
+    getGoods.then((res)=>{
+      // get result
+      let result = res.data.data;
+      // figure out good's category
+      let CategoryIndex = _this.state.categories.findIndex((category)=>{
+        return category.id === result.categoryId
+      })
+      // figure out good's unit
+      let unit = _this.state.unitOptions.find((unit) => unit.value === result.unitId);
+      // display images
+      let thumbs = result.thumbs.map((item)=>{
+         return {url:`data:image/png;base64,${item.img}`,id:item.id}
+      })
+      // diasplay data
+      _this.setState({
+        name:result.name,
+        description:result.description,
+        categoryId:result.categoryId,
+        categoriesChecked:_this.state.categoryOptions[CategoryIndex],
+        unitSelector:result.unitId,
+        unitValue:unit.label,
+        unitId:result.unitId,
+        originPrice:result.originalPrice,
+        groupPrice:result.groupPrice ? result.groupPrice : null,
+        groupPriceStatus:result.groupPrice ? true : false,
+        stock:result.stock,
+        files:thumbs
+      })
+      console.log(res.data.data,'res');
+      Taro.hideLoading();
+    },(err)=>{
+      Taro.hideLoading();
+      // show error
+      Taro.showToast({
+        title: err.errMsg,
+        icon:'loading',
+        duration: 2000
+      })
+      console.log(err,'err');
     })
   }
   handleNameChange=(name)=>{
@@ -430,12 +483,6 @@ export default class Index extends Component {
               extraText={this.state.stock === 999 ?this.state.defaultStock : this.state.stock}
               onClick={this.handleSetStockSheet.bind(this)}
             />
-            {/*<AtListItem*/}
-            {/*  title='设置商品规格'*/}
-            {/*  isSwitch*/}
-            {/*  switchColor='#FFD947'*/}
-            {/*  onSwitchChange={this.openSKUChange}*/}
-            {/*/>*/}
           </AtList>
         </View>
         <View className='basic-info bg-white mt-20'>
@@ -483,12 +530,13 @@ export default class Index extends Component {
           </AtList>
         </View>
         <View className='submit-btn mt-40 pb-20'>
-          <AtButton type='primary' disabled={this.state.Submited} size='normal' circle='true' onClick={this.submitGoodInfo.bind(this)}>确定</AtButton>
+          <AtButton className='update-btn' type='primary' disabled={this.state.Submited} size='normal' circle='true' onClick={this.submitGoodInfo.bind(this)}>确认修改</AtButton>
+          <AtButton className='cancel-btn' type='secondary' size='normal' circle='true'>取消</AtButton>
         </View>
         {warningEle}
         <AtActionSheet isOpened={this.state.setStockSheet} cancelText='确定' title='默认库存无限量至多999,或可点击输入库存' onCancel={ this.handleSetStockSheet.bind(this) }>
           <AtActionSheetItem onClick={this.setStockNone.bind(this)}>
-            无限量
+            无限量 
           </AtActionSheetItem>
           <AtActionSheetItem>
             <AtInputNumber className='stock-num-input'
