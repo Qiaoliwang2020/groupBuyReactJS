@@ -142,20 +142,60 @@ export default class Index extends Component {
       url:`/pages/editGoods/index?id=${currentId}`
     })
   }
+  delGoods(value){
+    let _this = this;
+    Taro.showModal({
+      title: '提示',
+      content: '确认删除该商品吗？',
+      success: function (res) {
+        if (res.confirm) {
+          let id =  value.target.dataset.id;
+          let params={
+            id:id
+          }
+
+          let delCat = api.put('/goods/deleteGoods',params,'application/json')
+          delCat.then((res)=>{
+           if (res.statusCode === 200){
+             Taro.showToast({
+               title: '删除成功',
+               icon:'success',
+               duration: 2000
+             })
+           }
+           // 重新获取列表
+          _this.getAllGoods();
+
+          }).catch((err)=>{
+            Taro.showToast({
+              title: err.errMsg,
+              icon:'loading',
+              duration: 2000
+            })
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  }
 
   render () {
     let {categories,goodsList,categoryGoodsList} = this.state;
     let renderGoods =  <View> 
       {goodsList.map((goods)=>{
          return <View className='goods-card'>
-         <image className='goods-pic' src={'data:image/png;base64,'+goods.thumbs[0].img} mode='aspectFill'></image>
+         <image className='goods-pic' src={'data:image/png;base64,'+goods.thumbs[0].url} mode='aspectFill'></image>
          <View className='goods-detail'>
            <View className='goods-title line-1-ellipsis'>{goods.name}</View>
            <View className='goods-detail-bottom'>
-             <View className='goods-price'>${goods.originalPrice}</View>
+             <View className='default-flex'>
+               <View className={goods.groupPrice > 0 ?'line-through-price':'goods-price'}>${goods.originalPrice}</View>
+               <View className='goods-price ml-10'>{goods.groupPrice > 0 ?`$${goods.groupPrice }` :''}</View>
+             </View>
              <View className='goods-status'>
                <View className='edit mr-20' data-id={goods._id} onClick={this.editGoods.bind(this)}>编辑</View>
-               <View className='del'>删除</View>
+               <View className='del'  data-id={goods._id} onClick={this.delGoods.bind(this)}>删除</View>
              </View>
            </View>
          </View>
@@ -165,23 +205,30 @@ export default class Index extends Component {
      let renderCategoryGoods = <View> 
       {categoryGoodsList.map((goods)=>{
           return <View className='goods-card'>
-          <image className='goods-pic' src={'data:image/png;base64,'+goods.thumbs[0].img} mode='aspectFill'></image>
+          <image className='goods-pic' src={'data:image/png;base64,'+goods.thumbs[0].url} mode='aspectFill'></image>
           <View className='goods-detail'>
             <View className='goods-title line-1-ellipsis'>{goods.name}</View>
             <View className='goods-detail-bottom'>
               <View className='goods-price'>${goods.originalPrice}</View>
               <View className='goods-status'>
                 <View className='edit mr-20' data-id={goods._id} onClick={this.editGoods.bind(this)}>编辑</View>
-                <View className='del'>删除</View>
+                <View className='del' data-id={goods._id} onClick={this.delGoods.bind(this)}>删除</View>
               </View>
             </View>
           </View>
         </View>
       })}
      </View>
+    let renderNoData = <View className='no-data'>
+      <View className='no-data-icon' />
+      该分类暂无数据哦～
+    </View> 
     let TabPanes =categories.map((c,i)=>{
       return <AtTabsPane className='goods-list' current={this.state.categoryCurrent} index={i}>
-       {i === 0 ? renderGoods : renderCategoryGoods}
+       {i === 0 
+       ? goodsList.length > 0 ? renderGoods: renderNoData 
+       : categoryGoodsList.length > 0 ? renderCategoryGoods : renderNoData
+       }
     </AtTabsPane>
     })
     return (

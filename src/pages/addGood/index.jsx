@@ -118,19 +118,25 @@ export default class Index extends Component {
   onImageUpload=(files,callback)=>{
     let thumbArray =[],_this = this;
     for(let i = 0;i<files.length;i++){
-      Taro.uploadFile({
-        url: 'http://192.168.0.102:3000/upload/uploadFile',
-        filePath: files[i].url,
-        header:{
-          'content-type': 'multipart/form-data',
-        },
-        name: 'file',
-        success: function (res){
-          let dataObj = JSON.parse(res.data)
-          // collect pictures
-          thumbArray.push(dataObj);
-          // callback
-          callback(thumbArray,_this);
+      wx.compressImage({
+        src: files[i].url, // picture path
+        quality: 50, // compress quality
+        success: res =>{
+          Taro.uploadFile({
+            url: 'http://192.168.0.102:3000/upload/uploadFile',
+            filePath: res.tempFilePath,
+            header:{
+              'content-type': 'multipart/form-data',
+            },
+            name: 'file',
+            success: function (res){
+              let dataObj = JSON.parse(res.data)
+              // collect pictures
+              thumbArray.push(dataObj);
+              // callback
+              callback(thumbArray,_this);
+            }
+          })
         }
       })
     }
@@ -296,6 +302,12 @@ export default class Index extends Component {
       })
     }else{
       if(images.length === files.length){ // when pictures completed uploaded  
+        
+        // set the submit button as disabled
+        _this.setState({
+          Submited:true
+        })
+
         let goods ={
           name:name,
           categoryId:categoryId,
@@ -307,10 +319,7 @@ export default class Index extends Component {
           groupPrice:groupPrice,
           date:Date.now()
         }
-        // set the submit button as disabled
-        _this.setState({
-          Submited:true
-        })
+        
         // post goods information to server 
         let createGoods = api.post('/goods/addGoods',goods,'application/json');
         createGoods.then((res)=>{

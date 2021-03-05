@@ -21,6 +21,7 @@ export default {
     'pages/classManagement/index',
     'pages/editGoods/index',
 
+
   ],
   window: {
     backgroundTextStyle: 'light',

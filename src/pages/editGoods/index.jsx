@@ -25,6 +25,7 @@ export default class Index extends Component {
   constructor () {
     super(...arguments)
     this.state = {
+      goodsId:'',
       name: '',
       description:'',
       addUnit:false,
@@ -80,6 +81,10 @@ export default class Index extends Component {
   getCurrentGoods=()=>{
     let _this = this;
     let goodsId = Taro.getCurrentInstance().router.params.id;
+
+    _this.setState({
+      goodsId:goodsId
+    })
     Taro.showLoading({
       title: '加载中',
     })
@@ -93,10 +98,13 @@ export default class Index extends Component {
       })
       // figure out good's unit
       let unit = _this.state.unitOptions.find((unit) => unit.value === result.unitId);
-      // display images
-      let thumbs = result.thumbs.map((item)=>{
-         return {url:`data:image/png;base64,${item.img}`,id:item.id}
+
+      // display Images
+      let thumbs = result.thumbs;
+      let thumbsDisplay = thumbs.map((file)=>{
+        return ({url:`data:image/png;base64,${file.url}`,id:file.id})
       })
+
       // diasplay data
       _this.setState({
         name:result.name,
@@ -110,7 +118,8 @@ export default class Index extends Component {
         groupPrice:result.groupPrice ? result.groupPrice : null,
         groupPriceStatus:result.groupPrice ? true : false,
         stock:result.stock,
-        files:thumbs
+        thumbs:thumbs,
+        files:thumbsDisplay
       })
       console.log(res.data.data,'res');
       Taro.hideLoading();
@@ -169,23 +178,47 @@ export default class Index extends Component {
     console.log(index, file)
   }
   onImageUpload=(files,callback)=>{
+
     let thumbArray =[],_this = this;
-    for(let i = 0;i<files.length;i++){
-      Taro.uploadFile({
-        url: 'http://192.168.0.102:3000/upload/uploadFile',
-        filePath: files[i].url,
-        header:{
-          'content-type': 'multipart/form-data',
-        },
-        name: 'file',
-        success: function (res){
-          let dataObj = JSON.parse(res.data)
-          // collect pictures
-          thumbArray.push(dataObj);
-          // callback
-          callback(thumbArray,_this);
-        }
+    let existFiles = _this.state.thumbs;
+    let newFiles = files.filter((file)=>{
+      return file.file !== undefined
+    })
+    console.log(files,newFiles,'files');
+    if(newFiles.length > 0){
+      for(let i = 0;i<newFiles.length;i++){
+        wx.compressImage({
+          src: newFiles[i].url, // picture path
+          quality: 50, // compress quality
+          success: res =>{
+            Taro.uploadFile({
+              url: 'http://192.168.0.102:3000/upload/uploadFile',
+              filePath: res.tempFilePath,
+              header:{
+                'content-type': 'multipart/form-data',
+              },
+              name: 'file',
+              success: function (res){
+                let dataObj = JSON.parse(res.data)
+                // collect pictures
+                thumbArray.push(dataObj);
+                // callback
+                callback(thumbArray.concat(existFiles),_this);
+              }
+            })
+          }
+        })
+      }
+    }else{
+      // when user remove one of the exist file
+      let existFilesId = files.map((file)=>{
+          return file.id
       })
+      // filter and get new exist files
+      let newExistFiles = existFiles.filter((file)=>{
+          return existFilesId.indexOf(file.id) !== -1;
+      })
+      callback(newExistFiles,_this);
     }
   }
   onChangeCategories = e => {
@@ -205,9 +238,6 @@ export default class Index extends Component {
        groupPrice:value
      })
   }
-  // openSKUChange = e =>{
-  //
-  // }
   showUnitPanel =()=>{
     this.setState({
       unitPanel:true,
@@ -350,6 +380,7 @@ export default class Index extends Component {
     }else{
       if(images.length === files.length){ // when pictures completed uploaded  
         let goods ={
+          _id:_this.state.goodsId,
           name:name,
           categoryId:categoryId,
           description:description,
@@ -360,24 +391,23 @@ export default class Index extends Component {
           groupPrice:groupPrice,
           date:Date.now()
         }
+        console.log(goods,'goods');
         // set the submit button as disabled
         _this.setState({
           Submited:true
         })
         // post goods information to server 
-        let createGoods = api.post('/goods/addGoods',goods,'application/json');
-        createGoods.then((res)=>{
+        let editGoods = api.put('/goods/updateGoods',goods,'application/json');
+        editGoods.then((res)=>{
           if(res.statusCode == 200){
              // notice success
              Taro.showToast({
-               title:'创建商品成功',
+               title:'商品编辑成功',
                icon:'success',
                duration:2000
              })
              // back to goods list page
-             Taro.navigateTo({
-              url:`/pages/goodsList/index`,
-            })
+             _this.backToList();
           }
         },(err)=>{
           console.log(err,'err')
@@ -394,6 +424,12 @@ export default class Index extends Component {
         })
       }
     } 
+  }
+  backToList=()=>{
+    // back to goods list page
+    Taro.redirectTo({
+      url:`/pages/goodsList/index`,
+    })
   }
 
   submitGoodInfo =()=>{
@@ -531,7 +567,7 @@ export default class Index extends Component {
         </View>
         <View className='submit-btn mt-40 pb-20'>
           <AtButton className='update-btn' type='primary' disabled={this.state.Submited} size='normal' circle='true' onClick={this.submitGoodInfo.bind(this)}>确认修改</AtButton>
-          <AtButton className='cancel-btn' type='secondary' size='normal' circle='true'>取消</AtButton>
+          <AtButton className='cancel-btn' type='secondary' size='normal' circle='true' onClick={this.backToList.bind(this)}>取消</AtButton>
         </View>
         {warningEle}
         <AtActionSheet isOpened={this.state.setStockSheet} cancelText='确定' title='默认库存无限量至多999,或可点击输入库存' onCancel={ this.handleSetStockSheet.bind(this) }>
