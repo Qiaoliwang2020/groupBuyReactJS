@@ -23,6 +23,8 @@ export default class Index extends Component {
       title: '',
       description:'',
       files: [],
+      currency:['澳币','人民币'],
+      currencyChecked: '澳币',
       discount:false,
       discountList:[],
       groupTime:false,
@@ -50,6 +52,16 @@ export default class Index extends Component {
   }
   onImageClick (index, file) {
     console.log(index, file)
+  }
+  onCurrencyChange = e => {
+    this.setState({
+      currencyChecked: this.state.currency[e.detail.value]
+    })
+  }
+  selectPayMethod =()=>{
+    Taro.navigateTo({
+      url:'/pages/payMethod/index'
+    })
   }
   handleDiscount (event) {
     this.setState({
@@ -145,8 +157,13 @@ export default class Index extends Component {
 
           <View className='bg-white mt-20'>
             <AtList>
-              <AtListItem title='货币' extraText='详细信息' arrow='right' iconInfo={{ size: 20, color: '#000', value: 'tags', }} />
-              <AtListItem title='收款方式' extraText='详细信息' arrow='right' iconInfo={{ size: 20, color: '#000', value: 'credit-card', }} />
+                <Picker mode='selector' range={this.state.currency} onChange={this.onCurrencyChange.bind(this)}>
+                    <AtListItem
+                      title='货币'
+                      extraText={this.state.currencyChecked} arrow='right' iconInfo={{ size: 20, color: '#000', value: 'tags', }}
+                    />
+                </Picker>
+              <AtListItem title='收款方式' extraText='请选择' arrow='right' iconInfo={{ size: 20, color: '#000', value: 'credit-card', }} onClick={this.selectPayMethod.bind(this)} />
               <AtListItem title='配送方式' extraText='详细信息' arrow='right' iconInfo={{ size: 20, color: '#000', value: 'equalizer', }} />
               {/*<AtListItem title='设置地区' extraText='SouthBank' arrow='right' />*/}
               {/*<AtListItem title='最低成团人数' extraText='10人' note='例如City 最低10人成团提供配送' arrow='right' />*/}

@@ -1,11 +1,10 @@
 export default {
   pages: [
-    'pages/goodsList/index',
+    'pages/addGroupBuy/index',
     'pages/login/index',
     'pages/profile/index',
     'pages/myGroup/index',
     'pages/index/index',
-    'pages/addGroupBuy/index',
     'pages/messages/index',
     'pages/addClass/index',
     'pages/editClass/index',
@@ -20,8 +19,8 @@ export default {
     'pages/addDeliveryArea/index',
     'pages/classManagement/index',
     'pages/editGoods/index',
-
-
+    'pages/goodsList/index',
+    'pages/payMethod/index',
   ],
   window: {
     backgroundTextStyle: 'light',
